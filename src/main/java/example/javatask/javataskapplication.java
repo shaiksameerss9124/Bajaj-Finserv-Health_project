@@ -21,7 +21,7 @@ public class JavaTaskApplication implements CommandLineRunner {
         ObjectMapper mapper = new ObjectMapper();
 
         String name = "Sameer Shaik";
-        String regNo = "REG12347";
+        String regNo = "22BCE9867";
         String email = "sameer@example.com";
 
         String url = "https://bfhldevapigw.healthrx.co.in/hiring/generateWebhook/JAVA";
@@ -45,9 +45,13 @@ public class JavaTaskApplication implements CommandLineRunner {
 
         String finalQuery;
         if (lastTwo % 2 == 1) {
-            finalQuery = "/* SQL Query for Question 1 */";
+            finalQuery = "SELECT dept_name, COUNT(student_id) AS total_students " +
+                         "FROM Department d " +
+                         "JOIN Student s ON d.dept_id = s.dept_id " +
+                         "GROUP BY dept_name;";
         } else {
-            finalQuery = "/* SQL Query for Question 2 */";
+            finalQuery = "SELECT s.name, m.name AS mentor_name " +
+                         "FROM Student s LEFT JOIN Mentor m ON s.mentor_id = m.id;";
         }
 
         headers = new HttpHeaders();
@@ -61,5 +65,6 @@ public class JavaTaskApplication implements CommandLineRunner {
                 restTemplate.postForEntity(webhookUrl, entity, String.class);
 
         System.out.println("Submission Response: " + submitResponse.getBody());
+        System.exit(0);
     }
 }
